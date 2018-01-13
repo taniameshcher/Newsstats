@@ -1,0 +1,35 @@
+﻿@using WebApplication1.Model;
+@{
+    ViewData["Title"] = "GoogleNews in USA";
+}
+<h2>@ViewData["Title"]</h2>
+<table border="5">
+    <tr>
+        <th><p align="center">Published at</p></th>
+        <th><p align="center">Source name</p></th>
+        <th><p align="center">Title</p></th>
+        <th><p align="center">Description</p></th>
+    </tr>
+    @{
+        GoogleNews googleNews = (GoogleNews)ViewData["GoogleNews"];
+
+        foreach (Article article in googleNews.articles)
+        {
+            <tr>
+                <td style="padding:4px"><p>@article.publishedAt</p></td>
+                <td style="padding:4px"><p>@article.source.name</p></td>
+                <td style="padding:4px"><p>@article.title</p></td>
+                <td style="padding:4px"><p>@article.description</p></td>
+            </tr>
+
+
+
+
+        }
+    }
+</table>
+
+
+
+
+

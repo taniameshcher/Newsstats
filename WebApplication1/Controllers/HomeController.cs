@@ -37,5 +37,19 @@ namespace WebApplication1.Controllers
             ViewData["Comment"] = comment;
             return View();
         }
+
+        public IActionResult GoogleNews()
+        {
+            GoogleNews googleNews = RestHelper.RestGet<GoogleNews>("https://newsapi.org/v2/top-headlines?country=us&apiKey=edf78a83063943ffabc69e15c78e2f93");
+            ViewData["GoogleNews"] = googleNews;
+            return View();
+        }
+
+        public IActionResult GoogleNewsRu()
+        {
+            GoogleNews googleNewsRu = RestHelper.RestGet<GoogleNews>("https://newsapi.org/v2/top-headlines?sources=google-news-ru&apiKey=edf78a83063943ffabc69e15c78e2f93");
+            ViewData["GoogleNewsRu"] = googleNewsRu;
+            return View();
+        }
     }
 }
