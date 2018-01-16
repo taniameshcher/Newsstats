@@ -10,13 +10,6 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-            
-            return View();
-        }
-
         public IActionResult Contact()
         {
             User[] users = RestHelper.RestGet<User[]>("https://jsonplaceholder.typicode.com/users");
