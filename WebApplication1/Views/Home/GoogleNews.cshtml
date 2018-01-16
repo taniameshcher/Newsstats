@@ -1,4 +1,5 @@
 ﻿@using WebApplication1.Model;
+@using System;
 @{
     ViewData["Title"] = "GoogleNews in USA";
 }
@@ -9,18 +10,40 @@
         <th><p align="center">Source name</p></th>
         <th><p align="center">Title</p></th>
         <th><p align="center">Description</p></th>
+        <th><p align="center">Num</p></th>
     </tr>
     @{
         GoogleNews googleNews = (GoogleNews)ViewData["GoogleNews"];
-
+        string keyWord = "Putin";
+        string[] separatingChars = { ".", ",", ":", ";", " ", "'" };
+        int sum = 0;
         foreach (Article article in googleNews.articles)
         {
+            string[] words = article.description.Split(separatingChars, System.StringSplitOptions.RemoveEmptyEntries);
+            int count = 0;
+            foreach (string word in words)
+            {
+
+                if (word == keyWord)
+                {count += 1;}
+
+            }
+            sum += count;
             <tr>
                 <td style="padding:4px"><p>@article.publishedAt</p></td>
                 <td style="padding:4px"><p>@article.source.name</p></td>
                 <td style="padding:4px"><p>@article.title</p></td>
                 <td style="padding:4px"><p>@article.description</p></td>
+                <td style="padding:4px"><p>@count</p></td>
+               
+             
             </tr>
+
+            
+            
+
+
+
 
 
 
@@ -29,6 +52,7 @@
     }
 </table>
 
+<h3>Total number of word "Putin": @sum</h3>
 
 
 

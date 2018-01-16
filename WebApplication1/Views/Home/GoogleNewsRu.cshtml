@@ -3,25 +3,43 @@
     ViewData["Title"] = "GoogleNewsRu";
 }
 
-<h2>GoogleNewsRu</h2>
+
 <h2>@ViewData["Title"]</h2>
 <table border="5">
     <tr>
         <th><p align="center">Published at</p></th>
-        <th><p align="center">Source name</p></th>
+        <th><p align="center">Source</p></th>
         <th><p align="center">Title</p></th>
         <th><p align="center">Description</p></th>
+        <th><p align="center">Num</p></th>
     </tr>
     @{
         GoogleNews googleNewsRu = (GoogleNews)ViewData["GoogleNewsRu"];
-
+        string keyWord = "Трамп";
+        string[] separatingChars = { ".", ",", ":", ";", " ", "'" };
+        int sum = 0;
         foreach (Article article in googleNewsRu.articles)
         {
+            string[] words = article.description.Split(separatingChars, System.StringSplitOptions.RemoveEmptyEntries);
+            int count = 0;
+            foreach (string word in words)
+            {
+
+                if (word == keyWord)
+                { count += 1; }
+
+            }
+            sum += count;
             <tr>
+                @{
+                    Uri newsUri = new Uri(article.url);
+                    string articleSrc = newsUri.Host;
+                }
                 <td style="padding:4px"><p>@article.publishedAt</p></td>
-                <td style="padding:4px"><p>@article.source.name</p></td>
+                <td style="padding:4px"><a href="@article.url">@articleSrc</a></td>
                 <td style="padding:4px"><p>@article.title</p></td>
                 <td style="padding:4px"><p>@article.description</p></td>
+                <td style="padding:4px"><p>@count</p></td>
             </tr>
 
 
@@ -31,7 +49,7 @@
     }
 </table>
 
-
+<h3>Total number of word "Трамп": @sum</h3>
 
 
 
