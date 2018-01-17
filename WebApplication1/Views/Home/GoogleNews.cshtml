@@ -1,7 +1,8 @@
 ﻿@using WebApplication1.Model;
+@using WebApplication1.Model.Deserialization;
 @{
     ViewData["Title"] = "GoogleNews in USA";
-}
+ }
 <h2>@ViewData["Title"]</h2>
 <table class="cinereousTable">
     <tr>
@@ -13,23 +14,12 @@
     </tr>
     @{
         GoogleNews googleNews = (GoogleNews)ViewData["GoogleNews"];
-        string keyWord = "her";
-        string[] separatingChars = { ".", ",", ":", ";", " ", "'" };
+        string keyWord = "Russia";
         int sum = 0;
+        WordFinder wordFinder = new WordFinder();
         foreach (Article article in googleNews.articles)
         {
-            string[] words = article.description.Split(separatingChars, System.StringSplitOptions.RemoveEmptyEntries);
-            int count = 0;
-            foreach (string word in words)
-            {
-
-                if (word == keyWord)
-                {
-                    count += 1;
-                    break;
-                }
-
-            }
+            int count = wordFinder.Find(keyWord, article.description);
             sum += count;
             <tr>
                 <td style="padding:4px"><p>@article.publishedAt</p></td>
@@ -38,11 +28,9 @@
                 <td style="padding:4px"><p>@article.description</p></td>
                 <td style="padding:4px"><p>@count</p></td>
                
-             
             </tr>
 
         }
-    }
+     }
 </table>
-
 <h3>Total number of word "@keyWord": @sum</h3>

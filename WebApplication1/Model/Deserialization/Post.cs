@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebApplication1.Model
+﻿namespace WebApplication1.Model.Deserialization
 {
     public class Post
     {
@@ -12,5 +7,4 @@ namespace WebApplication1.Model
         public string title { get; set; }
         public string body { get; set; }
     }
-
 }
