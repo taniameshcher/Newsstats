@@ -14,13 +14,12 @@
     </tr>
     @{
         GoogleNews googleNews = (GoogleNews)ViewData["GoogleNews"];
-        string keyWord = "Russia";
-        int sum = 0;
+        string keyWord = "the";
         WordFinder wordFinder = new WordFinder();
         foreach (Article article in googleNews.articles)
         {
             int count = wordFinder.Find(keyWord, article.description);
-            sum += count;
+            SumAccumulation.Sum += count;
             <tr>
                 <td style="padding:4px"><p>@article.publishedAt</p></td>
                 <td style="padding:4px"><p>@article.source.name</p></td>
@@ -33,4 +32,4 @@
         }
      }
 </table>
-<h3>Total number of word "@keyWord": @sum</h3>
+<h3>Total number of word "@keyWord": @SumAccumulation.Sum</h3>
