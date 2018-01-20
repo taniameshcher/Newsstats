@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using WebApplication1.Model;
 using WebApplication1.Model.Deserialization;
 
@@ -34,14 +35,16 @@ namespace WebApplication1.Controllers
 
         public IActionResult GoogleNews()
         {
-            GoogleNews googleNews = RestHelper.RestGet<GoogleNews>("https://newsapi.org/v2/top-headlines?country=us&apiKey=edf78a83063943ffabc69e15c78e2f93");
+            var apiKey = Environment.GetEnvironmentVariable("GOOGLE_KEY");
+            GoogleNews googleNews = RestHelper.RestGet<GoogleNews>($"https://newsapi.org/v2/top-headlines?country=us&apiKey={apiKey}");
             ViewData["GoogleNews"] = googleNews;
             return View();
         }
 
         public IActionResult GoogleNewsRu()
         {
-            GoogleNews googleNewsRu = RestHelper.RestGet<GoogleNews>("https://newsapi.org/v2/top-headlines?sources=google-news-ru&apiKey=edf78a83063943ffabc69e15c78e2f93");
+            var apiKey = Environment.GetEnvironmentVariable("GOOGLE_KEY");
+            GoogleNews googleNewsRu = RestHelper.RestGet<GoogleNews>($"https://newsapi.org/v2/top-headlines?sources=google-news-ru&apiKey={apiKey}");
             ViewData["GoogleNewsRu"] = googleNewsRu;
             return View();
         }
