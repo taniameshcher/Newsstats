@@ -17,8 +17,10 @@ namespace WebApplication1.Model
 
         public int Find(string keyword, string description)
         {
-            string[] words = description.Split(_separatingChars, StringSplitOptions.RemoveEmptyEntries);
             int count = 0;
+            if (description == null)
+                return count;
+            string[] words = description.Split(_separatingChars, StringSplitOptions.RemoveEmptyEntries);
             foreach (string word in words)
             {
                 if (word == keyword)
