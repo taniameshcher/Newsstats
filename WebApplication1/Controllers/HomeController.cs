@@ -28,7 +28,6 @@ namespace WebApplication1.Controllers
         public IActionResult Test()
         {
             Comment[] comment = RestHelper.RestGet<Comment[]>("https://jsonplaceholder.typicode.com/comments");
-
             ViewData["Comment"] = comment;
             return View();
         }

@@ -13,14 +13,20 @@
         <th><p align="center">Num</p></th>
     </tr>
     @{
-        GoogleNews googleNewsRu = (GoogleNews)ViewData["GoogleNewsRu"];
         string keyWord = "США";
         int sum = 0;
         WordFinder wordFinder = new WordFinder();
-        foreach (Article article in googleNewsRu.articles)
+        GoogleNews googleNewsRu = (GoogleNews)ViewData["GoogleNewsRu"];
+        if (googleNewsRu.articles == null)
         {
-            int count = wordFinder.Find(keyWord, article.description);
-            sum += count;
+            <tr><td><strong style="font-size: 50px;"> Check internet connection!</strong></td></tr>
+        }
+        else
+        {
+            foreach (Article article in googleNewsRu.articles)
+            {
+                int count = wordFinder.Find(keyWord, article.description);
+                sum += count;
             <tr>
                 @{
                     Uri newsUri = new Uri(article.url);
@@ -32,7 +38,8 @@
                 <td style="padding:4px"><p>@article.description</p></td>
                 <td style="padding:4px"><p>@count</p></td>
             </tr>   
-        }
-     }
+                            }
+                        }
+                    }
 </table>
 <h3>Total number of word "@keyWord": @sum</h3>
