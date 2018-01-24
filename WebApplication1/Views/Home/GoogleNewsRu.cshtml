@@ -14,32 +14,47 @@
     </tr>
     @{
         string keyWord = "США";
-        int sum = 0;
         WordFinder wordFinder = new WordFinder();
-        GoogleNews googleNewsRu = (GoogleNews)ViewData["GoogleNewsRu"];
-        if (googleNewsRu.articles == null)
+        GoogleNews googleNews = (GoogleNews)ViewData["GoogleNewsRu"];
+        if (googleNews.articles == null)
         {
             <tr><td><strong style="font-size: 50px;"> Check internet connection!</strong></td></tr>
         }
         else
         {
-            foreach (Article article in googleNewsRu.articles)
+            foreach (Article article in googleNews.articles)
             {
-                int count = wordFinder.Find(keyWord, article.description);
-                sum += count;
-            <tr>
-                @{
-                    Uri newsUri = new Uri(article.url);
-                    string articleSrc = newsUri.Host;
-                 }
-                <td style="padding:4px"><p>@article.publishedAt</p></td>
-                <td style="padding:4px"><a href="@article.url">@articleSrc</a></td>
-                <td style="padding:4px"><p>@article.title</p></td>
-                <td style="padding:4px"><p>@article.description</p></td>
-                <td style="padding:4px"><p>@count</p></td>
-            </tr>   
-                            }
-                        }
-                    }
+                if (SumAccumulation.CasheDictionary.ContainsKey(article.url))
+                {
+                    SumAccumulation.CasheDictionary[article.url].Exists = true;
+                }
+                else
+                {
+                    int count = wordFinder.Find(keyWord, article.description);
+                    SumAccumulation.Sum += count;
+                    CountExists countExists = new CountExists(count, true);
+                    SumAccumulation.CasheDictionary.Add(article.url, countExists);
+                }
+                <tr>
+                    <td style="padding:4px"><p>@article.publishedAt</p></td>
+                    <td style="padding:4px"><p>@article.source.name</p></td>
+                    <td style="padding:4px"><p>@article.title</p></td>
+                    <td style="padding:4px"><p>@article.description</p></td>
+                    <td style="padding:4px"><p>@SumAccumulation.CasheDictionary[article.url].Count</p></td>
+
+                </tr>
+            }
+
+            foreach (var item in SumAccumulation.CasheDictionary.Where(a => !a.Value.Exists).ToList())
+            {
+                SumAccumulation.CasheDictionary.Remove(item.Key);
+            }
+
+            foreach (string key in SumAccumulation.CasheDictionary.Keys)
+            {
+                SumAccumulation.CasheDictionary[key].Exists = false;
+            }
+        }
+    }
 </table>
-<h3>Total number of word "@keyWord": @sum</h3>
+<h3>Total number of word "@keyWord": @SumAccumulation.Sum</h3>

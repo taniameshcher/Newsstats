@@ -1,5 +1,6 @@
 ﻿@using WebApplication1.Model;
 @using WebApplication1.Model.Deserialization;
+@using System.Collections.Generic;
 @{
     ViewData["Title"] = "GoogleNews in USA";
  }
@@ -13,7 +14,6 @@
         <th><p align="center">Num</p></th>
     </tr>
     @{
-
         string keyWord = "the";
         WordFinder wordFinder = new WordFinder();
         GoogleNews googleNews = (GoogleNews)ViewData["GoogleNews"];
@@ -25,20 +25,39 @@
         {
             foreach (Article article in googleNews.articles)
             {
-                int count = wordFinder.Find(keyWord, article.description);
-                SumAccumulation.Sum += count;
-            <tr>
-                <td style="padding:4px"><p>@article.publishedAt</p></td>
-                <td style="padding:4px"><p>@article.source.name</p></td>
-                <td style="padding:4px"><p>@article.title</p></td>
-                <td style="padding:4px"><p>@article.description</p></td>
-                <td style="padding:4px"><p>@count</p></td>
-               
-            </tr>
-
+                if (SumAccumulation.CasheDictionary.ContainsKey(article.url))
+                {
+                    SumAccumulation.CasheDictionary[article.url].Exists = true;
                 }
+                else
+                {
+                    int count = wordFinder.Find(keyWord, article.description);
+                    SumAccumulation.Sum += count;
+                    CountExists countExists = new CountExists(count, true);
+                    SumAccumulation.CasheDictionary.Add(article.url, countExists);
+                }
+                <tr>
+                    <td style="padding:4px"><p>@article.publishedAt</p></td>
+                    <td style="padding:4px"><p>@article.source.name</p></td>
+                    <td style="padding:4px"><p>@article.title</p></td>
+                    <td style="padding:4px"><p>@article.description</p></td>
+                    <td style="padding:4px"><p>@SumAccumulation.CasheDictionary[article.url].Count</p></td>
+
+                </tr>
             }
+
+            foreach (var item in SumAccumulation.CasheDictionary.Where(a => !a.Value.Exists).ToList())
+            {
+                SumAccumulation.CasheDictionary.Remove(item.Key);
+            }
+
+            foreach (string key in SumAccumulation.CasheDictionary.Keys)
+            {
+                SumAccumulation.CasheDictionary[key].Exists = false;
+            }
+
         }
+    }
 </table>
 <h3>Total number of word "@keyWord": @SumAccumulation.Sum</h3>
         

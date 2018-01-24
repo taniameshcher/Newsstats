@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Model\Dictionary.cs" />
     <Compile Remove="Model\Mail.cs" />
   </ItemGroup>
 

@@ -15,6 +15,12 @@ namespace WebApplication1.Model
             _separatingChars = separatingChars;
         }
 
+        /// <summary>
+        /// Searches for keyword in description
+        /// </summary>
+        /// <param name="keyword">Keyword string</param>
+        /// <param name="description">Description sentences</param>
+        /// <returns>Number of keywords found in description</returns>
         public int Find(string keyword, string description)
         {
             int count = 0;
