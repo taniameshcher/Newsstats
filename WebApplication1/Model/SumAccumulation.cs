@@ -14,7 +14,7 @@ namespace WebApplication1.Model
         #region props
 
         public static int Sum { get => sum; set => sum = value; }
-        public static Dictionary<string, CountExists> CasheDictionary { get => casheDictionary; }
+        public static Dictionary<string, CountExists> CacheDictionary { get => casheDictionary; }
 
         #endregion
     }
