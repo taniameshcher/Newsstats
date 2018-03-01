@@ -33,7 +33,7 @@ namespace WebApplication1.Model
                     {
                         int count = wordFinder.Find(keyword, article.description);
                         SumAccumulation.Sum += count;
-                        CountExists countExists = new CountExists(count, true);
+                        CountExists countExists = new CountExists(count, true, article);
                         SumAccumulation.CacheDictionary.Add(article.url, countExists);
                     }
                 }

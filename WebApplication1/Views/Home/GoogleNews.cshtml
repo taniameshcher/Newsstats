@@ -1,9 +1,7 @@
 ﻿@using WebApplication1.Model;
-@using WebApplication1.Model.Deserialization;
-@using System.Collections.Generic;
 @{
     ViewData["Title"] = "GoogleNews in USA";
- }
+}
 <h2>@ViewData["Title"]</h2>
 <table class="cinereousTable">
     <tr>
@@ -14,50 +12,17 @@
         <th><p align="center">Num</p></th>
     </tr>
     @{
-        string keyWord = "the";
-        WordFinder wordFinder = new WordFinder();
-        GoogleNews googleNews = (GoogleNews)ViewData["GoogleNews"];
-        if (googleNews.articles == null)
+        foreach (string key in SumAccumulation.CacheDictionary.Keys)
         {
-            <tr><td><strong style="font-size: 50px;"> Check internet connection!</strong></td></tr>
-        }
-        else
-        {
-            foreach (Article article in googleNews.articles)
-            {
-                if (SumAccumulation.CacheDictionary.ContainsKey(article.url))
-                {
-                    SumAccumulation.CacheDictionary[article.url].Exists = true;
-                }
-                else
-                {
-                    int count = wordFinder.Find(keyWord, article.description);
-                    SumAccumulation.Sum += count;
-                    CountExists countExists = new CountExists(count, true);
-                    SumAccumulation.CacheDictionary.Add(article.url, countExists);
-                }
-                <tr>
-                    <td style="padding:4px"><p>@article.publishedAt</p></td>
-                    <td style="padding:4px"><p>@article.source.name</p></td>
-                    <td style="padding:4px"><p>@article.title</p></td>
-                    <td style="padding:4px"><p>@article.description</p></td>
-                    <td style="padding:4px"><p>@SumAccumulation.CacheDictionary[article.url].Count</p></td>
-
-                </tr>
-            }
-
-            foreach (var item in SumAccumulation.CacheDictionary.Where(a => !a.Value.Exists).ToList())
-            {
-                SumAccumulation.CacheDictionary.Remove(item.Key);
-            }
-
-            foreach (string key in SumAccumulation.CacheDictionary.Keys)
-            {
-                SumAccumulation.CacheDictionary[key].Exists = false;
-            }
-
+            var article = SumAccumulation.CacheDictionary[key].Article;
+            <tr>
+                <td style="padding:4px"><p>@article.publishedAt</p></td>
+                <td style="padding:4px"><p>@article.source.name</p></td>
+                <td style="padding:4px"><p>@article.title</p></td>
+                <td style="padding:4px"><p>@article.description</p></td>
+                <td style="padding:4px"><p>@SumAccumulation.CacheDictionary[article.url].Count</p></td>
+            </tr>
         }
     }
 </table>
-<h3>Total number of word "@keyWord": @SumAccumulation.Sum</h3>
-        
+<h3>Total number of word "@ViewData["keyword"]": @SumAccumulation.Sum</h3>
