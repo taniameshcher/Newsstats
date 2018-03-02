@@ -34,7 +34,7 @@ namespace WebApplication1.Controllers
 
         public IActionResult GoogleNews()
         {
-            string keyword = "thE";
+            string keyword = "the";
             var apiKey = Environment.GetEnvironmentVariable("GOOGLE_KEY");
             GoogleNews googleNews = RestHelper.RestGet<GoogleNews>($"https://newsapi.org/v2/top-headlines?country=us&apiKey={apiKey}");
             ArticleHandler articleHandler = new ArticleHandler(googleNews);

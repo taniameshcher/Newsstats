@@ -3,7 +3,7 @@ namespace WebApplication1.Model
 {
     public class WordFinder
     {
-        private string[] _separatingChars = { ".", ",", ":", ";", " ", "'" };
+        private string[] _separatingChars = { ".", ",", ":", ";", " ", "'", "-" };
 
         public WordFinder()
         {
