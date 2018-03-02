@@ -3,7 +3,7 @@ namespace WebApplication1.Model
 {
     public class WordFinder
     {
-        private string[] _separatingChars = { ".", ",", ":", ";", " ", "'" };
+        private string[] _separatingChars = { ".", ",", ":", ";", " ", "'", "-" };
 
         public WordFinder()
         {
@@ -24,6 +24,8 @@ namespace WebApplication1.Model
         public int Find(string keyword, string description)
         {
             int count = 0;
+            keyword = keyword.ToLower();
+            description = description.ToLower();
             if (description == null)
                 return count;
             string[] words = description.Split(_separatingChars, StringSplitOptions.RemoveEmptyEntries);
