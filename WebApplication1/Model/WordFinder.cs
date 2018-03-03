@@ -24,10 +24,14 @@ namespace WebApplication1.Model
         public int Find(string keyword, string description)
         {
             int count = 0;
+            if (string.IsNullOrWhiteSpace(description))
+                return count;
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                throw new Exception("There is no keyword to search");
+            }
             keyword = keyword.ToLower();
             description = description.ToLower();
-            if (description == null)
-                return count;
             string[] words = description.Split(_separatingChars, StringSplitOptions.RemoveEmptyEntries);
             foreach (string word in words)
             {
