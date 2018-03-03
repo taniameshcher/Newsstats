@@ -7,14 +7,16 @@ namespace WebApplication1.Model
         #region fields
 
         private static int sum;
-        private static Dictionary<string, CountExists> casheDictionary = new Dictionary<string, CountExists>();
+        private static Dictionary<string, CountExists> cacheDictionary = new Dictionary<string, CountExists>();
+        private static string keyword = "the";
 
         #endregion
 
         #region props
 
         public static int Sum { get => sum; set => sum = value; }
-        public static Dictionary<string, CountExists> CacheDictionary { get => casheDictionary; }
+        public static Dictionary<string, CountExists> CacheDictionary { get => cacheDictionary; }
+        public static string Keyword { get => keyword; }
 
         #endregion
     }
