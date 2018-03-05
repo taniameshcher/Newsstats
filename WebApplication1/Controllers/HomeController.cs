@@ -2,6 +2,7 @@
 using System;
 using WebApplication1.Model;
 using WebApplication1.Model.Deserialization;
+using WebApplication1;
 
 namespace WebApplication1.Controllers
 {
@@ -12,28 +13,16 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            User[] users = RestHelper.RestGet<User[]>("https://jsonplaceholder.typicode.com/users");
-
-            ViewData["Users"] = users;
-            return View();
-        }
-
         public IActionResult Error()
         {
             return View();
         }
 
-        public IActionResult Test()
-        {
-            Comment[] comment = RestHelper.RestGet<Comment[]>("https://jsonplaceholder.typicode.com/comments");
-            ViewData["Comment"] = comment;
-            return View();
-        }
-
         public IActionResult GoogleNews()
         {
+            ViewData["GoogleNewsCache"] = SumAccumulation.CacheDictionary;
+            ViewData["Keyword"] = SumAccumulation.Keyword;
+            ViewData["Sum"] = SumAccumulation.Sum;
             return View();
         }
 

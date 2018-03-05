@@ -12,17 +12,20 @@
         <th><p align="center">Num</p></th>
     </tr>
     @{
-        foreach (string key in SumAccumulation.CacheDictionary.Keys)
+        Dictionary<string, CountExists> cacheDictionary = (Dictionary<string, CountExists>)ViewData["GoogleNewsCache"];
+        string keyword = (string)ViewData["Keyword"];
+        int sum = (int)ViewData["Sum"];
+        foreach (string key in cacheDictionary.Keys)
         {
-            var article = SumAccumulation.CacheDictionary[key].Article;
+            var article = cacheDictionary[key].Article;
             <tr>
                 <td style="padding:4px"><p>@article.publishedAt</p></td>
                 <td style="padding:4px"><p>@article.source.name</p></td>
                 <td style="padding:4px"><p>@article.title</p></td>
                 <td style="padding:4px"><p>@article.description</p></td>
-                <td style="padding:4px"><p>@SumAccumulation.CacheDictionary[article.url].Count</p></td>
+                <td style="padding:4px"><p>@cacheDictionary[article.url].Count</p></td>
             </tr>
         }
     }
 </table>
-<h3>Total number of word "@SumAccumulation.Keyword": @SumAccumulation.Sum</h3>
+<h3>Total number of word "@keyword": @sum</h3>
