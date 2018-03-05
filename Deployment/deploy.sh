@@ -21,7 +21,7 @@ echo 'Run...'
 docker run \
   -d \
   --name newsstat \
-  -p 1234:80 \
+  -p 80:80 \
   --network=bridge \
   --env GOOGLE_KEY=${GOOGLE_KEY} \
   $DOCKER_IMAGE
